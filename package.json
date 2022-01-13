@@ -1,7 +1,13 @@
 {
+<<<<<<< HEAD
   "name": "@coderpad_io/firepad",
   "description": "Collaborative text editing powered by Firebase. As forked by Coderpad.io.",
   "version": "1.0.1",
+=======
+  "name": "firepad",
+  "description": "Collaborative text editing powered by Firebase",
+  "version": "1.5.12",
+>>>>>>> 5cd6ee5b (update version number)
   "author": "Firebase (https://firebase.google.com/)",
   "contributors": [
     "Michael Lehenbauer <michael@firebase.com>"
