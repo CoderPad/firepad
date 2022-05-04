@@ -54,7 +54,7 @@
         lineWrapping: true,
         mode: 'markdown'
       });
-      var firepad = new Firepad(firepadRef, cm);
+      var firepad = new Firepad('CodeMirror', firepadRef, cm);
 
       var richText = window.location.href.indexOf('#rich') >= 0;
 
