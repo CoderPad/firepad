@@ -50,7 +50,7 @@
                     language: 'javascript'
                 }
             );
-            Firepad.fromMonaco(firepadRef, editor);
+            Firepad.fromMonaco(firepadRef, editor.getModel(), {}, monaco);
         });
 
     }
