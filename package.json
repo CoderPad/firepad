@@ -65,6 +65,9 @@
     "karma-spec-reporter": "0.0.32",
     "monaco-editor": "^0.20.0"
   },
+  "peerDependencies": {
+    "@convergencelabs/monaco-collab-ext": "^0.3.2"
+  },
   "scripts": {
     "test": "grunt test",
     "travis": "grunt",

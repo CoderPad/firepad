@@ -70,8 +70,8 @@ describe('Integration tests', function() {
     var ref = rootRef.push();
     var cm1 = CodeMirror(hiddenDiv());
     var cm2 = CodeMirror(hiddenDiv());
-    var firepad1 = new Firepad(ref, cm1);
-    var firepad2 = new Firepad(ref, cm2);
+    var firepad1 = new Firepad('CodeMirror', ref, cm1);
+    var firepad2 = new Firepad('CodeMirror', ref, cm2);
 
     firepad1.on('ready', function() {
       firepad1.setText('XXX3456789XXX');
@@ -93,8 +93,8 @@ describe('Integration tests', function() {
     var ref = rootRef.push();
     var cm1 = CodeMirror(hiddenDiv());
     var cm2 = CodeMirror(hiddenDiv());
-    var firepad1 = new Firepad(ref, cm1);
-    var firepad2 = new Firepad(ref, cm2);
+    var firepad1 = new Firepad('CodeMirror', ref, cm1);
+    var firepad2 = new Firepad('CodeMirror', ref, cm2);
 
     function step(times) {
       if (times == 0) {
@@ -119,7 +119,7 @@ describe('Integration tests', function() {
   it('Performs getHtml responsively', function(done) {
     var ref = rootRef.push();
     var cm = CodeMirror(hiddenDiv());
-    var firepad = new Firepad(ref, cm);
+    var firepad = new Firepad('CodeMirror', ref, cm);
 
     firepad.on('ready', function() {
       var html = '<b>bold</b>';
@@ -135,7 +135,7 @@ describe('Integration tests', function() {
     var cm2 = CodeMirror(hiddenDiv());
     var text = 'This should be the starting text';
     var text2 = 'this is a new, different text';
-    var firepad = new Firepad(ref, cm, { defaultText: text});
+    var firepad = new Firepad('CodeMirror', ref, cm, { defaultText: text});
 
     firepad.on('ready', function() {
       expect(firepad.getText()).toEqual(text);
@@ -144,7 +144,7 @@ describe('Integration tests', function() {
         firepad.on('synced', function(isSync) { if (isSync) resolve(); });
       });
       waitForSync.then(function() {
-        var firepad2 = new Firepad(ref, cm2, { defaultText: text});
+        var firepad2 = new Firepad('CodeMirror', ref, cm2, { defaultText: text});
         firepad2.on('ready', function() {
           if (firepad2.getText() == text2) {
             done();
@@ -161,7 +161,7 @@ describe('Integration tests', function() {
   it('Emits sync events as users edit the pad', function(done) {
     var ref = rootRef.push();
     var cm = CodeMirror(hiddenDiv());
-    var firepad = new Firepad(ref, cm, { defaultText: 'XXXXXXXX' });
+    var firepad = new Firepad('CodeMirror', ref, cm, { defaultText: 'XXXXXXXX' });
     var startedSyncing = false;
 
     firepad.on('ready', function() {
@@ -182,7 +182,7 @@ describe('Integration tests', function() {
   it('Performs Firepad.dispose', function(done){
     var ref = rootRef.push();
     var cm = CodeMirror(hiddenDiv());
-    var firepad = new Firepad(ref, cm, { defaultText: "It\'s alive." });
+    var firepad = new Firepad('CodeMirror', ref, cm, { defaultText: "It\'s alive." });
 
     firepad.on('ready', function() {
       firepad.dispose();
@@ -201,7 +201,7 @@ describe('Integration tests', function() {
   it('Safely performs Firepad.dispose immediately after construction', function(){
     var ref =rootRef.push();
     var cm = CodeMirror(hiddenDiv());
-    var firepad = new Firepad(ref, cm);
+    var firepad = new Firepad('CodeMirror', ref, cm);
 
     expect(function() {
       firepad.dispose();
@@ -211,7 +211,7 @@ describe('Integration tests', function() {
   it('Performs headless get/set plaintext & dispose', function(done){
     var ref = rootRef.push();
     var cm = CodeMirror(hiddenDiv());
-    var firepadCm = new Firepad(ref, cm);
+    var firepadCm = new Firepad('CodeMirror', ref, cm);
     var firepadHeadless = new Headless(ref);
 
     var text = 'Hello from headless firepad!';
@@ -235,7 +235,7 @@ describe('Integration tests', function() {
   it('Performs headless get/set html & dispose', function(done) {
     var ref = rootRef.push();
     var cm = CodeMirror(hiddenDiv());
-    var firepadCm = new Firepad(ref, cm);
+    var firepadCm = new Firepad('CodeMirror', ref, cm);
     var firepadHeadless = new Headless(ref);
 
     var html =
@@ -323,7 +323,7 @@ describe('Integration tests', function() {
     var cm = CodeMirror(hiddenDiv());
 
     expect(function() {
-      var firepad = new Firepad(ref1, cm, { defaultText: 'Default Content'});
+      var firepad = new Firepad('CodeMirror', ref1, cm, { defaultText: 'Default Content'});
       firepad.dispose()
       // Wait some time for the callbacks to get called
       setTimeout(done, 1)
@@ -335,7 +335,7 @@ describe('Integration tests', function() {
     var ref2 = firebase.database().ref('2').push();
 
     var cm = CodeMirror(hiddenDiv());
-    var firepad1 = new Firepad(ref1, cm);
+    var firepad1 = new Firepad('CodeMirror', ref1, cm);
 
     firepad1.on('ready', function() {
       // Add some text to Firepad
@@ -348,7 +348,7 @@ describe('Integration tests', function() {
           cm.setValue('');
 
           // Create a new Firepad, using the same ref which we added text to, then dispose it
-          var firepad2 = new Firepad(ref1, cm);
+          var firepad2 = new Firepad('CodeMirror', ref1, cm);
           firepad2.dispose()
           firepad2.on('ready', () => {
             expect(cm.getValue()).toEqual('Test Content');
@@ -357,7 +357,7 @@ describe('Integration tests', function() {
     
           // Create a new Firepad instance with a different ref
           // Should not contain text from previously disposed firepad
-          var firepad3 = new Firepad(ref2, cm);
+          var firepad3 = new Firepad('CodeMirror', ref2, cm);
           firepad3.on('ready', function(synced) {
             expect(cm.getValue()).toEqual('');
             done();
